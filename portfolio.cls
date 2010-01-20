@@ -3,14 +3,34 @@
 
 \ProvidesClass{portfolio}
 
+% Document class options
+% ======================
+% 
+% Typeface options:
+% newcent -- Uses the New Century Schoolbook typeface
+% times -- Uses the Times Roman typeface
+% charter -- Uses the Bitstream Charter typeface
+% computer-modern -- Uses Computer Modern, LaTeX's default typeface
+%
+% Font size options:
+% 10pt
+% 11pt
+% 12pt
+% 
+% Alignment options:
+% justify -- Justifies both sides of the text, LaTeX's default
+% leftalign -- Justifies to the left side, leaves the right side ragged
+% 
+% Spacing options:
+% singlespace -- Normal spacing
+% doublespace -- Leaves one blank line between every actual line
+
 % User-configurable commands
 % ==========================
 
 % Options defaults
 
 % To set the default options, see the end of the "Declaring options" section
-
-\LoadClass[10pt,twoside]{article}
 
 % Add fields that you want to set in the document
 \makeatletter
@@ -30,6 +50,13 @@
 \phonemobile{}
 \email{}
 \website{}
+
+% Clear the LaTeX default vars, so the user can leave them unset if he wants
+\makeatletter
+	\def \@title {}
+	\def \@author {}
+	\def \@date {}
+\makeatother
 
 % Declaring options
 % ==================
@@ -52,6 +79,21 @@
 	}
 \makeatother
 
+% Font size
+\makeatletter
+	\newcommand{\@fontsize}{}
+	
+	\DeclareOption{10pt}{
+		\renewcommand{\@fontsize}{10pt}
+	}
+	\DeclareOption{11pt}{
+		\renewcommand{\@fontsize}{11pt}
+	}
+	\DeclareOption{12pt}{
+		\renewcommand{\@fontsize}{12pt}
+	}
+\makeatother
+
 % Alignment
 \makeatletter
 	\newcommand{\@alignment}{}
@@ -60,7 +102,7 @@
 		\renewcommand{\@alignment}{}
 	}
 	\DeclareOption{leftalign}{
-		\renewcommand{\@alignment}{\RaggedRight}
+		\renewcommand{\@alignment}{\raggedright}
 	}
 \makeatother
 
@@ -76,8 +118,20 @@
 	}
 \makeatother
 
+% Spacing
+\makeatletter
+	\newcommand{\@numsides}{}
+	
+	\DeclareOption{oneside}{
+		\renewcommand{\@numsides}{oneside}
+	}
+	\DeclareOption{twoside}{
+		\renewcommand{\@numsides}{twoside}
+	}
+\makeatother
+
 % Set default options (must come last in this section)
-\ExecuteOptions{charter,leftalign,singlespace}
+\ExecuteOptions{12pt,charter,leftalign,singlespace,oneside}
 
 % Applying options
 % ================
@@ -86,15 +140,20 @@
 % (must come first in this section)
 \ProcessOptions
 
+% Font sizes and num sides
+\makeatletter
+	\LoadClass[\@fontsize,\@numsides]{article}
+\makeatother
+
 % Typefaces
 \makeatletter
 	\@typeface
 \makeatother
 \renewcommand{\ttdefault}{cmtt}
+\usepackage{helvet}
 
 % Alignment
 % (must be before indentation because raggedright clears parindent)
-\usepackage{ragged2e}
 \makeatletter
 	\@alignment
 \makeatother
@@ -109,31 +168,53 @@
 % ===================
 
 % Margins
-\usepackage[top=0.75in,bottom=0.75in,left=1in,right=0.75in]{geometry}
+\usepackage[margin=0.5in,left=0.75in]{geometry}
+% Change margins on the fly
+\newenvironment{changemargin}[2]{%
+	\begin{list}{}{%
+		\setlength{\topsep}{0pt}%
+		\setlength{\leftmargin}{#1}%
+		\setlength{\rightmargin}{#2}%
+		\setlength{\listparindent}{\parindent}%
+		\setlength{\itemindent}{\parindent}%
+		\setlength{\parsep}{\parskip}%
+	}%
+	\item[] ~ \par%
+	% Get rid of the extra space inserted by the previous line
+	\vspace*{-2em}%
+	\vspace*{-\parskip}%
+}{
+	\end{list}
+}
 
-% Indentation
-\usepackage{indentfirst}
-\setlength{\parindent}{18pt}
-\setlength{\parskip}{2pt plus 2pt minus 1pt}
+% References
+\usepackage{varioref}
 
 % Figures
 \usepackage[pdftex]{graphicx}
+\DeclareGraphicsExtensions{.pdf, .png, .jpg}
 
-% Page numbers
+% Page numbers (must be after margins because geometry resets header lengths
 \usepackage{fancyhdr}
-\pagestyle{fancy}
-%\pagestyle{plain}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0in}
 \fancyhead[OR,EL]{\thepage}
-\fancyhfoffset[OR,EL]{0.5in}
+\pagestyle{fancy}
+\addtolength{\voffset}{0.25in} % how far the number is from the top
+\addtolength{\headsep}{-0.25in}
+
+% PDF URLs
+\usepackage{url}
+\usepackage{hyperref}
+%\newcommand{\email}[1]{\href{mailto:#1}{{\small\ttfamily{}#1}}}
+\newcommand{\link}[1]{{\small\url{#1}}}
 
 % Lists
 \usepackage{tweaklist}
 \renewcommand{\itemhook}{
 	\setlength{\topsep}{0pt}
 	\setlength{\partopsep}{0pt}
-	\setlength{\itemsep}{1pt}
+	\setlength{\itemsep}{2pt}
 	\setlength{\parsep}{0pt}
 	\setlength{\leftmargin}{2em}
 	\setlength{\rightmargin}{0pt}
@@ -142,9 +223,54 @@
 	\setlength{\labelsep}{0.5em}
 }
 
+% Indentation
+\usepackage{indentfirst}
+\setlength{\parskip}{0.6em plus 0.2em minus 0.2em}
+\setlength{\parindent}{0pt}
 
-\usepackage{pdfpages, placeins, varioref, url, mparhack}
+% Figures on the side
+\newlength{\colA}
+\newlength{\colB}
+\newlength{\colspace}
+\newlength{\colADecrease}
+\newlength{\colBSpace}
+\setlength{\colspace}{1em}
 
+\newcommand{\setfigwidth}[1]{
+	\setlength{\colB}{#1}
+	\setlength{\colA}{\textwidth}
+	\addtolength{\colA}{-\colspace}
+	\addtolength{\colA}{-\colB}
+	\setlength{\colADecrease}{\colB}
+	\addtolength{\colADecrease}{\colspace}
+}
+\newcommand{\fig}[2][1em]{%
+	\marginpar{\vspace{#1}\hspace{-\colB}%
+		\fbox{\includegraphics[width=\colB]{images/#2}}%
+	}%
+}
+\newcommand{\figsmall}[3][1em]{%
+	\setlength{\colBSpace}{\colB}%
+	\addtolength{\colBSpace}{-#3\colB}
+	\addtolength{\colBSpace}{-#3\colB}
+	\marginpar{\vspace{#1}\hspace{-#3\colB}%
+		\fbox{%
+			\hspace*{\colBSpace}%
+			\includegraphics[width=#3\colB]{images/#2}%
+			\hspace*{\colBSpace}%
+		}%
+	}%
+}
+\marginparsep=0pt
+\marginparpush=0em
+\setlength\fboxsep{2pt}
+\setlength\fboxrule{0.3pt}
+\newenvironment{figarea}[1]{%
+	\setfigwidth{#1}
+	\begin{changemargin}{0pt}{\colADecrease}%
+}{%
+	\end{changemargin}%
+}
 
 % Templates
 % =========
@@ -156,7 +282,7 @@
 		{section}
 		{1}
 		{\z@}
-		{0.8em plus 0.2em minus 0.1em} % rubber length -- LaTeX can grow or shrink it if necessary
+		{0.8em plus 0.2em minus 0.1em}
 		{0em}
 		{\normalfont\Large\sc\bfseries}
 		*
@@ -164,8 +290,20 @@
 	\hspace*{\fill} % End the section line
 	\vspace{2pt}
 	\hrule
-	\vspace{0.5em}
+	\addvspace{0.3em plus 0.2em minus 0.2em}
 	\par
+}
+
+\newcommand{\subsectionres}[1]{
+	\@startsection
+		{subsection}
+		{2}
+		{\z@}
+		{0.4em plus 0.2em minus 0.2em}
+		{0.1em plus 0.1em minus 0.2em}
+		{\normalfont\large\sf\bfseries}
+		*
+		{#1}
 }
 \makeatother
 
@@ -184,7 +322,7 @@
 		\textit{\@jobtitle} \hfill \@dates
 		\par
 	}{
-		\vspace{0.5em}
+		\addvspace{0.4em plus 0.2em minus 0.2em}
 	}
 \makeatother
 
@@ -199,7 +337,7 @@
 		\textbf{\@schoolname} \hfill \@dates
 		\par
 	}{
-		\vspace{0.5em}
+		\addvspace{0.4em plus 0.2em minus 0.2em}
 	}
 \makeatother
 
