@@ -292,6 +292,7 @@
 	\hrule
 	\addvspace{0.3em plus 0.2em minus 0.2em}
 	\par
+	\nopagebreak
 }
 
 \newcommand{\subsectionres}[1]{
