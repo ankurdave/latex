@@ -182,7 +182,6 @@
 	\item[] ~ \par%
 	% Get rid of the extra space inserted by the previous line
 	\vspace*{-2em}%
-	\vspace*{-\parskip}%
 }{
 	\end{list}
 }
@@ -234,12 +233,16 @@
 \newlength{\colspace}
 \newlength{\colADecrease}
 \newlength{\colBSpace}
-\setlength{\colspace}{1em}
 
-\newcommand{\setfigwidth}[1]{
-	\setlength{\colB}{#1}
+\newcommand{\setfigwidth}[2]{
+	\setlength{\colspace}{#2}
+	
 	\setlength{\colA}{\textwidth}
-	\addtolength{\colA}{-\colspace}
+	\addtolength{\colA}{-0.5\colspace}
+	
+	\setlength{\colB}{#1}
+	\addtolength{\colB}{-0.5\colspace}
+	
 	\addtolength{\colA}{-\colB}
 	\setlength{\colADecrease}{\colB}
 	\addtolength{\colADecrease}{\colspace}
@@ -265,47 +268,61 @@
 \marginparpush=0em
 \setlength\fboxsep{2pt}
 \setlength\fboxrule{0.3pt}
-\newenvironment{figarea}[1]{%
-	\setfigwidth{#1}
+\newenvironment{figarea}[2][1em]{%
+	\setfigwidth{#2}{#1}%
 	\begin{changemargin}{0pt}{\colADecrease}%
 }{%
 	\end{changemargin}%
 }
+
+% Bibliography styles
+\usepackage{natbib}
 
 % Templates
 % =========
 
 % Sections
 \makeatletter
-\newcommand{\sectionres}[1]{
-	\@startsection
-		{section}
-		{1}
-		{\z@}
-		{0.8em plus 0.2em minus 0.1em}
-		{0em}
-		{\normalfont\Large\sc\bfseries}
-		*
-		{#1}
-	\hspace*{\fill} % End the section line
-	\vspace{2pt}
-	\hrule
-	\addvspace{0.3em plus 0.2em minus 0.2em}
-	\par
-	\nopagebreak
-}
+\newenvironment{resume}[1]{
+	\phantomsection
+	\addtocounter{section}{1}
+	\addcontentsline{toc}{section}{#1}
+	\renewcommand{\section}[1]{
+		\phantomsection
+		\addtocounter{subsection}{1}
+		\addcontentsline{toc}{subsection}{##1}
+		\@startsection
+			{subsection}
+			{2}
+			{\z@}
+			{0.8em plus 0.2em minus 0.1em}
+			{0em}
+			{\normalfont\Large\sc\bfseries}
+			*
+			{##1}
+		\hspace*{\fill} % End the section line
+		\vspace{2pt}
+		\hrule
+		\addvspace{0.3em plus 0.2em minus 0.2em}
+		\par
+		\nopagebreak
+	}
+	\renewcommand{\subsection}[1]{
+		\phantomsection
+		\addtocounter{subsubsection}{1}
+		\addcontentsline{toc}{subsubsection}{##1}
+		\@startsection
+			{subsubsection}
+			{3}
+			{\z@}
+			{0.4em plus 0.2em minus 0.2em}
+			{0.1em plus 0.1em minus 0.2em}
+			{\normalfont\large\sf\bfseries}
+			*
+			{##1}
+	}
+}{}
 
-\newcommand{\subsectionres}[1]{
-	\@startsection
-		{subsection}
-		{2}
-		{\z@}
-		{0.4em plus 0.2em minus 0.2em}
-		{0.1em plus 0.1em minus 0.2em}
-		{\normalfont\large\sf\bfseries}
-		*
-		{#1}
-}
 \makeatother
 
 % Job positions
