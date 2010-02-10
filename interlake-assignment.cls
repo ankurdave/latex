@@ -149,8 +149,8 @@
 
 % Indentation
 \usepackage{indentfirst}
-\setlength{\parindent}{0.05 \textwidth}
-\setlength{\parskip}{3pt}
+\setlength{\parindent}{0.08 \textwidth}
+\setlength{\parskip}{0pt}
 
 % References
 \usepackage{varioref}
