@@ -1,0 +1,12 @@
+\makeatletter
+\newenvironment{prose}{%
+	% Justify
+	\let\\\@normalcr%
+	\@rightskip\z@skip \rightskip\@rightskip%
+	\leftskip\z@skip%
+	% Paragraph spaces
+	\parskip=0pt%
+	\parindent=18pt%
+}{%
+}
+\makeatother
