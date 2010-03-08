@@ -198,7 +198,7 @@
 	\def \@titleblock {
 		\begin{center}
 			\ifx \@title \@empty \relax \else
-				{\large \@title } \\
+				\@title \\
 			\fi
 
 			\ifx \@subtitle \@empty \relax \else

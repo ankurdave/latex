@@ -207,13 +207,19 @@
 \usepackage{hyperref}
 %\newcommand{\email}[1]{\href{mailto:#1}{{\small\ttfamily{}#1}}}
 \newcommand{\link}[1]{{\small\url{#1}}}
+\makeatletter
+	\def\url@smallerstyle{%
+	\@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother
+\urlstyle{smaller}
+
 
 % Lists
 \usepackage{tweaklist}
 \renewcommand{\itemhook}{
 	\setlength{\topsep}{0pt}
 	\setlength{\partopsep}{0pt}
-	\setlength{\itemsep}{2pt}
+	\setlength{\itemsep}{2pt plus 2pt minus 1pt}
 	\setlength{\parsep}{0pt}
 	\setlength{\leftmargin}{2em}
 	\setlength{\rightmargin}{0pt}
@@ -224,7 +230,7 @@
 
 % Indentation
 \usepackage{indentfirst}
-\setlength{\parskip}{0.6em plus 0.2em minus 0.2em}
+\setlength{\parskip}{0.6em plus 0.3em minus 0.4em}
 \setlength{\parindent}{0pt}
 
 % Figures on the side
@@ -247,7 +253,7 @@
 	\setlength{\colADecrease}{\colB}
 	\addtolength{\colADecrease}{\colspace}
 }
-\newcommand{\fig}[2][1em]{%
+\newcommand{\fig}[2][0em]{%
 	\marginpar{\vspace{#1}\hspace{-\colB}%
 		\fbox{\includegraphics[width=\colB]{images/#2}}%
 	}%
@@ -265,7 +271,7 @@
 	}%
 }
 \marginparsep=0pt
-\marginparpush=0em
+\marginparpush=1em
 \setlength\fboxsep{2pt}
 \setlength\fboxrule{0.3pt}
 \newenvironment{figarea}[2][1em]{%
@@ -295,7 +301,7 @@
 			{subsection}
 			{2}
 			{\z@}
-			{0.8em plus 0.2em minus 0.1em}
+			{0.8em plus 0.2em minus 0.4em}
 			{0em}
 			{\normalfont\Large\sc\bfseries}
 			*
@@ -303,7 +309,7 @@
 		\hspace*{\fill} % End the section line
 		\vspace{2pt}
 		\hrule
-		\addvspace{0.3em plus 0.2em minus 0.2em}
+		\addvspace{0.3em plus 0.15em minus 0.15em}
 		\par
 		\nopagebreak
 	}
@@ -315,12 +321,70 @@
 			{subsubsection}
 			{3}
 			{\z@}
-			{0.4em plus 0.2em minus 0.2em}
-			{0.1em plus 0.1em minus 0.2em}
+			{0.3em plus 0.1em minus 0.1em}
+			{0.1em plus 0.1em minus 0.05em}
 			{\normalfont\large\sf\bfseries}
 			*
 			{##1}
 	}
+}{}
+
+\newenvironment{qanda}[1]{
+	\phantomsection
+	\addtocounter{section}{1}
+	\addcontentsline{toc}{section}{#1}
+	\newcommand{\question}[1]{%
+		\newpage%
+		\phantomsection%
+		\addtocounter{subsection}{1}%
+		\addcontentsline{toc}{subsection}{##1}%
+		\@startsection%
+			{subsection}%
+			{2}%
+			{\z@}%
+			{1em}%
+			{1em}%
+			{\normalfont\Large\bfseries\color{questionColor}}%
+			*%
+			{##1}%
+	}
+	\renewcommand{\section}[1]{%
+		\newpage%
+		\phantomsection%
+		\addtocounter{subsection}{1}%
+		\addcontentsline{toc}{subsection}{##1}%
+		\@startsection%
+			{subsection}%
+			{2}%
+			{\z@}%
+			{1em}%
+			{1em}%
+			{\normalfont\Large\bfseries\centering}%
+			*%
+			{##1}%
+		}
+		\newcommand{\answersection}[1]{%
+			\@startsection%
+				{subsubsection}%
+				{3}%
+				{\z@}%
+				{0.5em plus 0.3em minus 0.2em}%
+				{0.2em plus 0.1em minus 0.1em}%
+				{\normalfont\large\bfseries}%
+				*%
+				{##1}%
+		}
+		\renewcommand{\paragraph}[1]{%
+			\@startsection%
+				{paragraph}%
+				{4}%
+				{\z@}%
+				{0em}%
+				{-0.5em}%
+				{\normalfont\normalsize\bfseries}%
+				*%
+				{##1}%
+		}
 }{}
 
 \makeatother
@@ -364,7 +428,7 @@
 \def \@maketitle {
 	\begin{center}
 		{\Large \bf \@name}
-		\vspace{0.5em} \hrule height 1pt \vspace{0.5em}
+		\vspace{0.5em} \hrule height 1pt \vspace{0.3em plus 0.2em minus 0.2em}
 		\begin{tabular}{r l}
 			\@addressone & \@addresstwo \\
 			home: \@phonehome & mobile: \@phonemobile \\
