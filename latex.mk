@@ -14,7 +14,7 @@ LATEX_BUILD_OPTIONS ?= --force --pdf --short --quiet
 export TEXINPUTS=.:/home/ankur/latex//:/home/ankur/.texmf-config//:
 
 # How to generate the makefiles for the dependencies.
-LATEXGENMAKE ?= latexgenmake
+LATEXGENMAKE ?= /home/ankur/latex/latexgenmake
 LATEXGENMAKE_OPTIONS ?=
 
 # How to show the PDF.
