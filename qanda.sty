@@ -1,0 +1,59 @@
+\makeatletter
+\newenvironment{qanda}[1]{
+	\phantomsection
+	\addtocounter{section}{1}
+	\addcontentsline{toc}{section}{#1}
+	\newcommand{\question}[1]{%
+		\newpage%
+		\phantomsection%
+		\addtocounter{subsection}{1}%
+		\addcontentsline{toc}{subsection}{##1}%
+		\@startsection%
+			{subsection}%
+			{2}%
+			{\z@}%
+			{1em}%
+			{1em}%
+			{\normalfont\Large\bfseries\color{questionColor}}%
+			*%
+			{##1}%
+	}
+	\renewcommand{\section}[1]{%
+		\newpage%
+		\phantomsection%
+		\addtocounter{subsection}{1}%
+		\addcontentsline{toc}{subsection}{##1}%
+		\@startsection%
+			{subsection}%
+			{2}%
+			{\z@}%
+			{1em}%
+			{1em}%
+			{\normalfont\Large\bfseries\centering}%
+			*%
+			{##1}%
+		}
+		\newcommand{\answersection}[1]{%
+			\@startsection%
+				{subsubsection}%
+				{3}%
+				{\z@}%
+				{0.5em plus 0.3em minus 0.2em}%
+				{0.2em plus 0.1em minus 0.1em}%
+				{\normalfont\large\bfseries}%
+				*%
+				{##1}%
+		}
+		\renewcommand{\paragraph}[1]{%
+			\@startsection%
+				{paragraph}%
+				{4}%
+				{\z@}%
+				{0em}%
+				{-0.5em}%
+				{\normalfont\normalsize\bfseries}%
+				*%
+				{##1}%
+		}
+}{}
+\makeatother

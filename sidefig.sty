@@ -1,0 +1,50 @@
+\usepackage{changemargin}
+
+% Figures on the side
+\newlength{\colA}
+\newlength{\colB}
+\newlength{\colspace}
+\newlength{\colADecrease}
+\newlength{\colBSpace}
+
+\newcommand{\setfigwidth}[2]{
+	\setlength{\colspace}{#2}
+	
+	\setlength{\colA}{\textwidth}
+	\addtolength{\colA}{-0.5\colspace}
+	
+	\setlength{\colB}{#1}
+	\addtolength{\colB}{-0.5\colspace}
+	
+	\addtolength{\colA}{-\colB}
+	\setlength{\colADecrease}{\colB}
+	\addtolength{\colADecrease}{\colspace}
+}
+\newcommand{\fig}[2][0em]{%
+	\marginpar{\vspace{#1}\hspace{-\colB}%
+		\fbox{\includegraphics[width=\colB]{images/#2}}%
+	}%
+}
+\newcommand{\figsmall}[3][1em]{%
+	\setlength{\colBSpace}{\colB}%
+	\addtolength{\colBSpace}{-#3\colB}
+	\addtolength{\colBSpace}{-#3\colB}
+	\marginpar{\vspace{#1}\hspace{-#3\colB}%
+		\fbox{%
+			\hspace*{\colBSpace}%
+			\includegraphics[width=#3\colB]{images/#2}%
+			\hspace*{\colBSpace}%
+		}%
+	}%
+}
+\marginparsep=0pt
+\marginparpush=1em
+\setlength\fboxsep{2pt}
+\setlength\fboxrule{0.3pt}
+\newenvironment{figarea}[2][1em]{%
+	\setfigwidth{#2}{#1}%
+	\begin{changemargin}{0pt}{\colADecrease}%
+}{%
+	\end{changemargin}%
+}
+
