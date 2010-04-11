@@ -32,32 +32,6 @@
 
 % To set the default options, see the end of the "Declaring options" section
 
-% Add fields that you want to set in the document
-\makeatletter
-	\newcommand{\name}[1]{\def \@name {#1}}
-	\newcommand{\addressone}[1]{\def \@addressone {#1}}
-	\newcommand{\addresstwo}[1]{\def \@addresstwo {#1}}
-	\newcommand{\phonehome}[1]{\def \@phonehome {#1}}
-	\newcommand{\phonemobile}[1]{\def \@phonemobile {#1}}
-	\newcommand{\email}[1]{\def \@email {#1}}
-	\newcommand{\website}[1]{\def \@website {#1}}
-\makeatother
-
-\name{}
-\addressone{}
-\addresstwo{}
-\phonehome{}
-\phonemobile{}
-\email{}
-\website{}
-
-% Clear the LaTeX default vars, so the user can leave them unset if he wants
-\makeatletter
-	\def \@title {}
-	\def \@author {}
-	\def \@date {}
-\makeatother
-
 % Declaring options
 % ==================
 
@@ -289,46 +263,6 @@
 
 % Sections
 \makeatletter
-\newenvironment{resume}[1]{
-	\phantomsection
-	\addtocounter{section}{1}
-	\addcontentsline{toc}{section}{#1}
-	\renewcommand{\section}[1]{
-		\phantomsection
-		\addtocounter{subsection}{1}
-		\addcontentsline{toc}{subsection}{##1}
-		\@startsection
-			{subsection}
-			{2}
-			{\z@}
-			{0.8em plus 0.2em minus 0.4em}
-			{0em}
-			{\normalfont\Large\sc\bfseries}
-			*
-			{##1}
-		\hspace*{\fill} % End the section line
-		\vspace{2pt}
-		\hrule
-		\addvspace{0.3em plus 0.15em minus 0.15em}
-		\par
-		\nopagebreak
-	}
-	\renewcommand{\subsection}[1]{
-		\phantomsection
-		\addtocounter{subsubsection}{1}
-		\addcontentsline{toc}{subsubsection}{##1}
-		\@startsection
-			{subsubsection}
-			{3}
-			{\z@}
-			{0.3em plus 0.1em minus 0.1em}
-			{0.1em plus 0.1em minus 0.05em}
-			{\normalfont\large\sf\bfseries}
-			*
-			{##1}
-	}
-}{}
-
 \newenvironment{qanda}[1]{
 	\phantomsection
 	\addtocounter{section}{1}
@@ -386,55 +320,4 @@
 				{##1}%
 		}
 }{}
-
 \makeatother
-
-% Job positions
-\makeatletter
-	\newcommand{\employer}[1]{\def \@employer {#1}}
-	\newcommand{\location}[1]{\def \@location {#1}}
-	\newcommand{\jobtitle}[1]{\def \@jobtitle {#1}}
-	\newcommand{\dates}[1]{\def \@dates {#1}}
-	\employer{}
-	\jobtitle{}
-	\dates{}
-
-	\newenvironment{position}{
-		\textbf{\@employer} \hfill \textit{\@location}\\
-		\textit{\@jobtitle} \hfill \@dates
-		\par
-	}{
-		\addvspace{0.4em plus 0.2em minus 0.2em}
-	}
-\makeatother
-
-% Schools
-\makeatletter
-	\newcommand{\schoolname}[1]{\def \@schoolname {#1}}
-%	\newcommand{\dates}[1]{\def \@dates {#1}} % already defined by position
-	\schoolname{}
-	\dates{}
-
-	\newenvironment{school}{
-		\textbf{\@schoolname} \hfill \@dates
-		\par
-	}{
-		\addvspace{0.4em plus 0.2em minus 0.2em}
-	}
-\makeatother
-
-% Title
-\makeatletter
-\def \@maketitle {
-	\begin{center}
-		{\Large \bf \@name}
-		\vspace{0.5em} \hrule height 1pt \vspace{0.3em plus 0.2em minus 0.2em}
-		\begin{tabular}{r l}
-			\@addressone & \@addresstwo \\
-			home: \@phonehome & mobile: \@phonemobile \\
-			\texttt{\@email} & \texttt{\@website} \\
-		\end{tabular}
-	\end{center}
-}
-\makeatother
-
