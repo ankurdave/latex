@@ -3,8 +3,7 @@
 	\newcommand{\name}[1]{\def \@name {#1}}
 	\newcommand{\addressone}[1]{\def \@addressone {#1}}
 	\newcommand{\addresstwo}[1]{\def \@addresstwo {#1}}
-	\newcommand{\phonehome}[1]{\def \@phonehome {#1}}
-	\newcommand{\phonemobile}[1]{\def \@phonemobile {#1}}
+	\newcommand{\phone}[1]{\def \@phone {#1}}
 	\newcommand{\email}[1]{\def \@email {#1}}
 	\newcommand{\website}[1]{\def \@website {#1}}
 \makeatother
@@ -12,8 +11,7 @@
 \name{}
 \addressone{}
 \addresstwo{}
-\phonehome{}
-\phonemobile{}
+\phone{}
 \email{}
 \website{}
 
@@ -38,7 +36,7 @@
 			{subsection}
 			{2}
 			{\z@}
-			{0.8em plus 0.2em minus 0.4em}
+			{0.8em plus 0.2em minus 0.7em}
 			{0em}
 			{\normalfont\Large\sc\bfseries}
 			*
@@ -68,28 +66,19 @@
 \makeatother
 
 % Job positions
-\makeatletter
-	\newcommand{\employer}[1]{\def \@employer {#1}}
-	\newcommand{\location}[1]{\def \@location {#1}}
-	\newcommand{\jobtitle}[1]{\def \@jobtitle {#1}}
-	\newcommand{\dates}[1]{\def \@dates {#1}}
-	\employer{}
-	\jobtitle{}
-	\dates{}
-
-	\newenvironment{position}{
-		\textbf{\@employer} \hfill \textit{\@location}\\
-		\textit{\@jobtitle} \hfill \@dates
+	\newenvironment{position}[4]{
+		\textbf{#1} \hfill \textit{#2}\\
+		\textit{#3} \hfill #4
 		\par
 	}{
+		\par
 		\addvspace{0.4em plus 0.2em minus 0.2em}
 	}
-\makeatother
 
 % Schools
 \makeatletter
 	\newcommand{\schoolname}[1]{\def \@schoolname {#1}}
-%	\newcommand{\dates}[1]{\def \@dates {#1}} % already defined by position
+	\newcommand{\dates}[1]{\def \@dates {#1}} % already defined by position
 	\newcommand{\major}[1]{\def \@major {#1}}
 	\schoolname{}
 	\dates{}
@@ -106,6 +95,8 @@
 	}
 \makeatother
 
+\usepackage{multirow}
+
 % Title
 \makeatletter
 \def \@maketitle {
@@ -114,10 +105,9 @@
 		\vspace{0.5em} \hrule height 1pt \vspace{0.3em plus 0.2em minus 0.2em}
 		\begin{tabular}{r l}
 			\@addressone & \@addresstwo \\
-			home: \@phonehome & mobile: \@phonemobile \\
 			\texttt{\@email} & \texttt{\@website} \\
+			\multicolumn{2}{c}{mobile: \@phone}
 		\end{tabular}
 	\end{center}
 }
 \makeatother
-
