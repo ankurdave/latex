@@ -22,8 +22,7 @@
 	\newcommand{\name}[1]{\def \@name {#1}}
 	\newcommand{\addressone}[1]{\def \@addressone {#1}}
 	\newcommand{\addresstwo}[1]{\def \@addresstwo {#1}}
-	\newcommand{\phonehome}[1]{\def \@phonehome {#1}}
-	\newcommand{\phonemobile}[1]{\def \@phonemobile {#1}}
+	\newcommand{\phone}[1]{\def \@phone {#1}}
 	\newcommand{\email}[1]{\def \@email {#1}}
 	\newcommand{\website}[1]{\def \@website {#1}}
 \makeatother
@@ -31,8 +30,7 @@
 \name{}
 \addressone{}
 \addresstwo{}
-\phonehome{}
-\phonemobile{}
+\phone{}
 \email{}
 \website{}
 
@@ -112,6 +110,8 @@
 
 % Other configuration
 % ===================
+
+\usepackage{multirow}
 
 % Margins
 \usepackage[top=0.5in,bottom=0.5in,left=1in,right=1in]{geometry}
@@ -212,8 +212,8 @@
 		\vspace{0.5em} \hrule height 1pt \vspace{0.5em}
 		\begin{tabular}{r l}
 			\@addressone & \@addresstwo \\
-			home: \@phonehome & mobile: \@phonemobile \\
-			\texttt{\@email} & \texttt{\@website} \\
+			\texttt{\@email} & \@phone \\
+			\multicolumn{2}{c}{\texttt{\@website}}
 		\end{tabular}
 	\end{center}
 }
