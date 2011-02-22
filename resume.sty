@@ -1,3 +1,6 @@
+\usepackage{hyperref} % for \phantomsection
+\usepackage{ifthen}
+
 % Fields that the user can set
 \makeatletter
 	\newcommand{\name}[1]{\def \@name {#1}}
@@ -80,17 +83,18 @@
 	\newcommand{\schoolname}[1]{\def \@schoolname {#1}}
 	\newcommand{\dates}[1]{\def \@dates {#1}} % already defined by position
 	\newcommand{\major}[1]{\def \@major {#1}}
+	\newcommand{\gpa}[1]{\def \@gpa {#1}}
 	\schoolname{}
 	\dates{}
 	\major{}
+	\gpa{}
 
-	\newenvironment{school}{
-		\textbf{\@schoolname} \hfill \@dates \\
-		\ifx \@major \@empty \relax \else
-			\textit{\@major}
-		\fi
+	\newenvironment{school}[4]{
+		\textbf{#1} \hfill #2 \\
+		\ifthenelse{\equal{#3}{} \and \equal{#4}{}}{}{\textit{#3} \hfill #4}
 		\par
 	}{
+		\par
 		\addvspace{0.4em plus 0.2em minus 0.2em}
 	}
 \makeatother
