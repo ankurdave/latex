@@ -1,15 +1,25 @@
+\def\collaborators{}
+\makeatletter
 \newcommand{\header}[2]{
   \clearpage
   \begin{center}
     Ankur Dave -- Section 103 -- GSI: Fares Hedagati \\
     {\Large #1} \\
-    CS 70 -- Spring 2011
+    CS 70 -- Spring 2011 \\
+    \ifx \collaborators \@empty \else
+      Collaborators: \collaborators
+    \fi
   \end{center}
 
   {\large \textbf{#2.}}
 }
+\makeatother
 
 \renewcommand{\part}[1]{\textbf{Part #1.}\par}
 
 \newcommand{\divides}{\vert}
 \newcommand{\calls}{\rightarrow}
+
+\newcommand{\pand}{\cap}
+\newcommand{\por}{\cup}
+\newcommand{\pnot}[1]{\overline{#1}}
