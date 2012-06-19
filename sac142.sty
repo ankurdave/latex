@@ -1,0 +1,57 @@
+% margins
+\usepackage[margin=1in]{geometry}
+
+% fonts
+\usepackage{mathptmx}
+
+% alignment
+% (must be before indentation because raggedright clears parindent)
+\raggedright
+
+% indentation
+\usepackage{indentfirst}
+\setlength{\parindent}{24pt}
+\setlength{\parskip}{0pt}
+
+% spacing
+\usepackage{setspace}
+
+% page numbering
+\pagestyle{plain}
+
+% title
+\makeatletter
+\def \maketitle {
+  \pdfinfo{/Title (\@title) /Author (\@author)}
+  \noindent \@author \\
+  \noindent \@date
+  \begin{center}
+    \@title
+  \end{center}
+}
+\makeatother
+
+% sections
+\makeatletter
+\renewcommand\section{\@startsection {section}{1}{\z@}
+	                               {0pt}
+	                               {1sp}
+	                               {\normalfont\normalsize\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}
+	                                 {0pt}
+	                                 {1sp}
+	                                 {\normalfont\normalsize\bfseries}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}
+	                                 {0pt}
+	                                 {1sp}
+	                                 {\normalfont\normalsize\bfseries}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+	                                {3.25ex \@plus1ex \@minus.2ex}%
+	                                {-1em}%
+	                                {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+	                                   {3.25ex \@plus1ex \@minus .2ex}%
+	                                   {-1em}%
+	                                  {\normalfont\normalsize\bfseries}}
+\makeatother
+

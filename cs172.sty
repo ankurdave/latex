@@ -1,0 +1,49 @@
+\usepackage[sc]{mathpazo}
+\linespread{1.05}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+
+\raggedright
+
+\usepackage[margin=1.0in]{geometry}
+
+%\usepackage[pdftex]{graphicx}
+%\DeclareGraphicsExtensions{.pdf, .png, .jpg}
+
+\usepackage{url}
+\usepackage{hyperref, varioref}
+\makeatletter	\def\url@smallerstyle{\@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother
+\urlstyle{smaller}
+
+\usepackage{parskip}
+\setlength{\parskip}{0.6em plus 0.3em minus 0.4em}
+
+%\pagestyle{empty}
+
+\def\collaborators{}
+\makeatletter
+\newcommand{\header}[1]{
+  \cleardoublepage
+  \begin{center}
+    Ankur Dave (22415407) \\
+    {\Large #1} \\
+    CS 172 -- Spring 2012 \\
+    \ifx \collaborators \@empty \else
+      Collaborators: \collaborators
+    \fi
+  \end{center}
+}
+\makeatother
+
+\usepackage{amsthm,amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows, patterns, automata, shapes}
+\tikzset{->, >=stealth', semithick, node distance=1in, auto}
+\newcommand{\incomplete}{{\color{red}\textbf{(incomplete)}}}
+\newcommand{\where}{\mid}
+\newcommand{\alt}{\ \big|\ }
+
+\usepackage{enumitem}
+\setlist{itemsep=1em}
+\setlist[itemize]{itemsep=0em}

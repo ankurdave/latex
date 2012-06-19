@@ -7,8 +7,8 @@
 
 \usepackage[margin=1.0in]{geometry}
 
-\usepackage[pdftex]{graphicx}
-\DeclareGraphicsExtensions{.pdf, .png, .jpg}
+%\usepackage[pdftex]{graphicx}
+%\DeclareGraphicsExtensions{.pdf, .png, .jpg}
 
 \usepackage{url}
 \usepackage{hyperref}
@@ -65,3 +65,11 @@
 \newcommand{\pnot}[1]{\overline{#1}}
 \usepackage{algpseudocode}
 \algblockdefx[RepeatTimes]{RepeatTimes}{EndRepeatTimes}[1]{\textbf{repeat} #1 \textbf{times}}{\textbf{end repeat}}
+\usepackage{amsthm,amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows, patterns}
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\renewcommand{\theenumi}{(\alph{enumi})}
+\newcommand{\incomplete}{{\color{red}\textbf{(incomplete)}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
