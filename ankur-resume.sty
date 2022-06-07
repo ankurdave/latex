@@ -70,7 +70,7 @@
 
 % Job positions
 	\newenvironment{position}[4]{
-		\textbf{#1} \hfill \textit{#2}\\
+		\ifthenelse{\equal{#1}{} \and \equal{#2}{}}{}{\textbf{#1} \hfill \textit{#2}\\}
 		\textit{#3} \hfill #4
 		\par
 	}{
@@ -108,9 +108,8 @@
 		{\Large \bf \@name}
 		\vspace{0.5em} \hrule height 1pt \vspace{0.3em plus 0.2em minus 0.2em}
 		\begin{tabular}{r l}
-			\@addressone & \@addresstwo \\
-			\texttt{\@email} & \texttt{\@website} \\
-			\multicolumn{2}{c}{mobile: \@phone}
+			\multicolumn{2}{c}{\@addressone, \@addresstwo} \\
+			\texttt{\@email} & \@phone
 		\end{tabular}
 	\end{center}
 }
